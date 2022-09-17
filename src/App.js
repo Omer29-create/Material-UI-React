@@ -7,7 +7,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
-import { makeStyles } from "@mui/material/styles";
+import { makeStyles, ThemeProvider, createTheme } from "@mui/material/styles";
+import { green, orange } from "@mui/material/colors";
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
 
 const useStyles = makeStyles({
   root: {
@@ -20,19 +26,30 @@ const useStyles = makeStyles({
   },
 });
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: green[400],
+    },
+    secondary: {
+      main: orange[400],
+    },
+  },
+});
+
 function ButtonStyled() {
   const classes = useStyles();
   return <Button className={classes.root}>Test Styled Button</Button>;
 }
 
 function CheckboxExample() {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
   return (
     <FormControlLabel
       control={
         <Checkbox
           checked={checked}
-          icon={<DeleteIcon />}
+          icon={<saveIcon />}
           checkedIcon={<SaveIcon />}
           onChange={(e) => setChecked(e.target.checked)}
           inputProps={{
@@ -47,23 +64,25 @@ function CheckboxExample() {
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <ButtonStyled />
-        <TextField
-          variant="filled"
-          color="secondary"
-          type="time"
-          label="The Time"
-          placeholder="test@test.com"
-        />
-        <CheckboxExample />
-        <ButtonGroup variant="contained" size="large">
-          <Button startIcon={<SaveIcon />}>SAVE</Button>
-          <Button startIcon={<DeleteIcon />}>DISCARD</Button>
-        </ButtonGroup>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <header className="App-header">
+          <ButtonStyled />
+          <TextField
+            variant="filled"
+            color="secondary"
+            type="time"
+            label="The Time"
+            placeholder="test@test.com"
+          />
+          <CheckboxExample />
+          <ButtonGroup variant="contained" color="primary">
+            <Button startIcon={<SaveIcon />}>SAVE</Button>
+            <Button startIcon={<DeleteIcon />}>DISCARD</Button>
+          </ButtonGroup>
+        </header>
+      </div>
+    </ThemeProvider>
   );
 }
 
